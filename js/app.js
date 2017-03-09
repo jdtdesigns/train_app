@@ -6,6 +6,8 @@ var app = (function() {
 				first_time = $('#first_time').val(), frequency = $('#frequency').val()
 				hours = first_time[0], minutes = first_time[1];
 
+		if ( !$('form').find('input').val().length > 0 ) return;
+
 		event.preventDefault();
 
 		var db = firebase.database().ref('/trains'),
