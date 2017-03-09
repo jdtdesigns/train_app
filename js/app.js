@@ -37,8 +37,6 @@ var app = (function() {
 					arrivalTime = first < current ? moment().add(minutes, 'minutes').format('HH:mm') :
 												train.first_time;
 
-
-			console.log(firstMin);
 			$('table tbody').append(
 				'<tr>' + 
 					'<td>' + train.name + '</td>' +
