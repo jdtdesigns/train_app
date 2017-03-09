@@ -29,14 +29,16 @@ var app = (function() {
 					hour = moment().format('H'), minute = moment().format('mm'),
 					firstValues = train.first_time.split(':'),
 					firstHour = firstValues[0], firstMin = firstValues[1],
-					first = (firstHour * 60) + (firstMin * 1),
-					current = (hour * 60) + (minute * 1),
+					first = (firstHour * 60) + firstMin % 10,
+					current = (hour * 60) + minute % 10,
 					diff = current - first, trains = Math.floor(diff / train.frequency) + 1,
 					arrival = trains * train.frequency + first,
 					minutes = first < current ? arrival - current : first - current, 
 					arrivalTime = first < current ? moment().add(minutes, 'minutes').format('HH:mm') :
 												train.first_time;
 
+
+			console.log(firstMin);
 			$('table tbody').append(
 				'<tr>' + 
 					'<td>' + train.name + '</td>' +
