@@ -31,13 +31,35 @@ var app = (function() {
 
 		db.on('child_added', function(train) {
 			var train = train.val(), currentTime = moment(),
-					arr = train.first_time.split(':');
+					arr = train.first_time.split(':'),
+					hour = moment().format('H'),
+					minute = moment().format('m'),
+					future = arr[0] * 60 + arr[1],
+					current = hour * 60 + minute;
 					// hours = arr[0],
 					// minutes = arr[1],
 					// arrival = moment(train.first_time, 'HH:mm'),
 					// arrival_time = moment(moment().diff(arrival)).format('HH:mm'),
 					// minutes = moment.duration(arrival.diff(currentTime)).asMinutes().toFixed();
-			var future = arr[0] * 60 + arr[1];
+
+
+			// Find how much time has passed since the first train
+			var diff = current - future;
+
+		// Find how many trains have come so far
+			var trainsSinceFirst = Math.floor(diff/frequency);
+
+		// Find how long until the next train comes
+			var nextArrival = ((trainsSinceFirst + 1) * frequency) + ftMoment;
+
+			if (future < current) {
+				var minAway = nextArrival - timeMoment;
+				var nextArrival = moment().add(minAway, 'minutes').format('HH:mm');
+			} 
+			else {
+				var nextArrival = firstTrain;
+				var minAway = ftMoment - timeMoment;
+			};
 			console.log(future);
 
 
