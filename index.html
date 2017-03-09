@@ -7,9 +7,22 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-			
-        <div class="container column y-center">
-        	<h1>Train App</h1>
+				<div class="row x-center">
+					<h1>Train App</h1>
+				</div>
+
+        <div class="container row x-center">
+        	
+        	<form class="column">
+	      		<h2>Add Train</h2>
+
+	      		<input type="text" placeholder="Train Name" id="name" required>
+	      		<input type="text" placeholder="Destination" id="destination" required>
+	      		<input type="text" placeholder="First Train Time (HH:mm - military time)" id="first_time" required>
+	      		<input type="text" placeholder="Frequency" id="frequency" required>
+
+	      		<button type="submit" id="submit">Submit</button>
+	        </form>
 
         	<table>
 
@@ -32,16 +45,6 @@
         		</tbody>
         	</table>
 
-        	<form class="column">
-        		<h2>Add Train</h2>
-
-        		<input type="text" placeholder="Train Name" id="name" required>
-        		<input type="text" placeholder="Destination" id="destination" required>
-        		<input type="text" placeholder="First Train Time (HH:mm - military time)" id="first_time" required>
-        		<input type="text" placeholder="Frequency" id="frequency" required>
-
-        		<button type="submit" id="submit">Submit</button>
-	        	</form>
         </div>
 				
 

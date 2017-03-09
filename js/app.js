@@ -8,11 +8,6 @@ var app = (function() {
 
 		event.preventDefault();
 
-		// var date = new Date();
-		// date.setHours(hours);
-		// date.setMinutes(minutes);
-
-
 		var db = firebase.database().ref('/trains'),
 				train = {};
 
@@ -30,57 +25,25 @@ var app = (function() {
 		var db = firebase.database().ref('/trains');
 
 		db.on('child_added', function(train) {
-			var train = train.val(), currentTime = moment(),
-					arr = train.first_time.split(':'),
-					hour = moment().format('H'),
-					minute = moment().format('m'),
-					future = arr[0] * 60 + arr[1],
-					current = hour * 60 + minute;
-					// hours = arr[0],
-					// minutes = arr[1],
-					// arrival = moment(train.first_time, 'HH:mm'),
-					// arrival_time = moment(moment().diff(arrival)).format('HH:mm'),
-					// minutes = moment.duration(arrival.diff(currentTime)).asMinutes().toFixed();
-
-
-			// Find how much time has passed since the first train
-			var diff = current - future;
-
-		// Find how many trains have come so far
-			var trainsSinceFirst = Math.floor(diff/frequency);
-
-		// Find how long until the next train comes
-			var nextArrival = ((trainsSinceFirst + 1) * frequency) + ftMoment;
-
-			if (future < current) {
-				var minAway = nextArrival - timeMoment;
-				var nextArrival = moment().add(minAway, 'minutes').format('HH:mm');
-			} 
-			else {
-				var nextArrival = firstTrain;
-				var minAway = ftMoment - timeMoment;
-			};
-			console.log(future);
-
-
-
-			// var arrive = moment().set({
-   //       'hour' : hours,
-   //       'minute'  : minutes 
-   //    });
-
-			// console.log(arrive);
-			// 12:00 
-			// every 30 minutes -- 12:30 1:00 1:30
-			// 1:27 Need 1:30 - 1:27 = 3 minutes
+			var train = train.val(), 
+					hour = moment().format('H'), minute = moment().format('mm'),
+					firstValues = train.first_time.split(':'),
+					firstHour = firstValues[0], firstMin = firstValues[1],
+					first = (firstHour * 60) + (firstMin * 1),
+					current = (hour * 60) + (minute * 1),
+					diff = current - first, trains = Math.floor(diff / train.frequency) + 1,
+					arrival = trains * train.frequency + first,
+					minutes = first < current ? arrival - current : first - current, 
+					arrivalTime = first < current ? moment().add(minutes, 'minutes').format('HH:mm') :
+												train.first_time;
 
 			$('table tbody').append(
 				'<tr>' + 
 					'<td>' + train.name + '</td>' +
 					'<td>' + train.destination + '</td>' +
 					'<td>' + train.frequency + '</td>' +
-					'<td>' + 'blah' + '</td>' + 
-					'<td>' + 'blah' + '</td>' +
+					'<td>' + arrivalTime + '</td>' + 
+					'<td>' + minutes + '</td>' +
 				'</tr>'
 			);
 		});
@@ -88,10 +51,10 @@ var app = (function() {
 	};
 
 	var init = function() {
-		// console.log()
 
 		$('#submit').on('click', addTrainToDB);
 		getTrains();
+
 	};
 
 	return { init: init };

@@ -63,13 +63,13 @@ ul {
 	justify-content: space-around;
 }
 
-.container {
-	h1 {
-		color: #fff;
-	}
+h1 {
+	color: #fff;
+	margin-bottom: 45px;
+}
 
+.container {
 	table {
-		margin-top: 50px;
 		background: #222;
 		padding: 5px;
 		th, td {
@@ -88,8 +88,8 @@ ul {
 
 	form {
 		background: #222;
+		margin-right: 25px;
 		padding: 25px;
-		margin-top: 25px;
 		h2 {
 			text-align: center; 
 			color: #fff;
@@ -113,6 +113,7 @@ ul {
 			border: none;
 			outline: none;
 			margin-top: 10px;
+			cursor: pointer;
 		}
 	}
 }
