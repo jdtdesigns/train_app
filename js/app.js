@@ -26,7 +26,10 @@ var app = (function() {
 
 	var getTrains = function() {
 		var db = firebase.database().ref('/trains');
-
+		db.once('value')
+		.then(function(trains) {
+			console.log(trains.numChildren());
+		});
 		db.on('child_added', function(train) {
 			var train = train.val(), 
 					hour = moment().format('H'), minute = moment().format('mm'),
